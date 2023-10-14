@@ -1,11 +1,22 @@
 version: '3'
 services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: server-chat
+      MYSQL_USER: rian
+      MYSQL_PASSWORD: root9844
+    ports:
+      - "3307:3306"
+
   cliente:
     build: ./cliente
     ports:
       - "3000:3000"
     depends_on:
       - server
+      - chat-server
 
   server:
     build: ./server
@@ -20,16 +31,6 @@ services:
       - "5000:5000"
     depends_on:
       - server
-
-  mysql:
-    image: mysql:latest
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: server-chat
-      MYSQL_USER: rian
-      MYSQL_PASSWORD: root9844
-    ports:
-      - "3307:3306"
 
 volumes:
   mysql-data:
