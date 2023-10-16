@@ -1,4 +1,5 @@
 import socketio
+import eventlet
 
 sio = socketio.Server(cors_allowed_origins='*')
 app = socketio.WSGIApp(sio)
@@ -18,5 +19,4 @@ def chat_message(sid, data):
     sio.emit('chat_message', data)
 
 if __name__ == '__main__':
-    import eventlet
     eventlet.wsgi.server(eventlet.listen(('0.0.0.0', 5000)), app)
